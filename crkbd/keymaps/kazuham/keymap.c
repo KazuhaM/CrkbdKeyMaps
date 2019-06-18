@@ -1,6 +1,7 @@
 #include QMK_KEYBOARD_H
 #include "bootloader.h"
 #include "action_layer.h"
+#include"keymap_jp.h"
 #ifdef PROTOCOL_LUFA
   #include "lufa.h"
   #include "split_util.h"
@@ -34,7 +35,6 @@ enum {
     FUNC,
     SFUNC,
     EFUNC,
-    TD_LANGN
 };
 
 enum custom_keycodes {
@@ -120,8 +120,6 @@ enum custom_keycodes {
 
 
 //IME change
-#define KC_CHIME LALT(KC_GRAVE)
-#define KC_LANN TD(TD_LANGN)
 #define KC_IEN IM_EN
 #define KC_IJP IM_JP
 
@@ -273,13 +271,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_MSKYTOUCH] = LAYOUT_kc( \
   //|----+----+----+----+----+----|              |----+----+----+----+----+----|
-      ___,COMM, H  , R  , M  , W                 , DUU, DAI, DOU, DOT, DEI, ___,
+      TAB,COMM, H  , R  , M  , W                 , DUU, DAI, DOU, DOT, DEI, LALT,
   //|----+----+----+----+----+----|              |----+----+----+----+----+----|
-      ___, Y  , S  , T  , K  , N                 , U  , A  , O  , I  , E  ,MINS,
+      LGUI, Y  , S  , T  , K  , N                 , U  , A  , O  , I  , E  ,MINS,
   //|----+----+----+----+----+----+----.    ,----|----+----+----+----+----+----|
-      ___, P  , L  ,DTSU, DWO, DEL               ,BSPC, DAU, DOI, DII, DEA, ___,
+      LSFT, P  , L  ,DTSU, DWO, DEL               ,BSPC, DAU, DOI, DII, DEA, ENT,
   //`----+----+----+----+----+----+----/    \----+----+----+----+----+----+----'
-                        ___, FNC, SJP         , ___, NUM, MRK
+                        LCTL, FNC, SJP         , LEN, NUM, MRK
   //                  `----+----+----'        `----+----+----'
   ),
 
@@ -298,11 +296,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //mark (symbol) keymap for english (IME: off)
     [_MARK] = LAYOUT(
   //,-------+-----------+-----------+-----------+-----------+-----------.                           ,-----------+-----------+-----------+-----------+-----------+-----------.
-     KC____ , KC_LT     , KC_GT     , KC_LBRC   , KC_RBRC   , KC_AMPR                               , KC_EQL    , KC_EXLM   , KC_BSLS   , KC_PERC   , KC_MINS   , KC____    ,
+     KC____ , JP_LT     , JP_GT     , JP_LBRC   , JP_RBRC   , JP_AMPR                               , JP_EQL    , JP_EXLM   , JP_BSLS   , JP_PERC   , JP_MINS   , KC____    ,
   //|-------+-----------+-----------+-----------+-----------+-----------|                           |-----------+-----------+-----------+-----------+-----------+-----------|
-     KC____ , KC_QUOT	  , KC_DQT    , KC_LPRN   , KC_RPRN   , KC_DLR                                , KC_SSTT   , KC_QUES   , KC_AT     , KC_UNDS   , KC_PLUS   , KC_PIPE   ,
+     KC____ , JP_QUOT	  , JP_DQT    , JP_LPRN   , JP_RPRN   , JP_DLR                                , KC_SSTT   , JP_QUES   , JP_AT     , JP_UNDS   , JP_PLUS   , JP_PIPE   ,
   //|-------+-----------+-----------+-----------+-----------+-----------+-----------.    ,----------|-----------+-----------+-----------+-----------+-----------+-----------|
-     KC____ , KC_COMM   , KC_GRV    , KC_LCBR   , KC_RCBR   , KC____                                , KC____    , KC_TILD   , KC_HASH   , KC_SLSH   , KC_DOT    , KC____    ,
+     KC____ , JP_COMM   , JP_GRV    , JP_LCBR   , JP_RCBR   , KC____                                , KC____    , JP_TILD   , JP_HASH   , JP_SLSH   , JP_DOT    , KC____    ,
   //`-------+-----------+-----------+-----------+-----------+-----------+-----------/    \----------+-----------+-----------+-----------+-----------+-----------+-----------'
                                                   KC____    , KC____    , KC_SMK         , KC____   , KC____    , KC____
   //                                             `----------+-----------+-----------'    `----------+-----------+-----------'
@@ -311,7 +309,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    //mark (symbol) keymap for english (IME: off)
     [_SMARK] = LAYOUT(
   //,-------+-----------+-----------+-----------+-----------+-----------.                           ,-----------+-----------+-----------+-----------+-----------+-----------.
-     KC____ , KC____    , KC_SLSH   , KC_UNDS   , KC_MINS   , KC_EXLM                               , KC_BSLS   , KC_CIRC   , KC_SCLN   , KC_ASTR   , KC_SCLN   , KC_COLN  ,
+     KC____ , KC____    , JP_SLSH   , JP_UNDS   , JP_MINS   , JP_EXLM                               , JP_BSLS   , JP_CIRC   , JP_SCLN   , JP_ASTR   , JP_SCLN   , JP_COLN  ,
   //|-------+-----------+-----------+-----------+-----------+-----------|                           |-----------+-----------+-----------+-----------+-----------+-----------|
      KC____ , KC____    , KC____    , KC____    , KC____    , KC____                                , KC____    , KC____    , KC____    , KC____    , KC____    , KC____    ,
   //|-------+-----------+-----------+-----------+-----------+-----------+-----------.    ,----------|-----------+-----------+-----------+-----------+-----------+-----------|
@@ -372,15 +370,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                                   KC____    , KC____    , KC_NO          , KC____   , KC_SF     , KC____
   //                                             `----------+-----------+-----------'    `----------+-----------+-----------'
   ),
-
+    
   //extra function keymap for english (IME: off)
     [_EFUNC] = LAYOUT(
   //,-------+-----------+-----------+-----------+-----------+-----------.                           ,-----------+-----------+-----------+-----------+-----------+-----------.
      KC_F1  , KC_F2     , KC_F3     , KC_F4     , KC_F5     , KC_F6                                 , KC_F7     , KC_F8     , KC_F9     , KC_F10    , KC_F11    , KC_F12    ,
   //|-------+-----------+-----------+-----------+-----------+-----------|                           |-----------+-----------+-----------+-----------+-----------+-----------|
-     KC_LTOG, KC_LHUI   , KC_LSAI   , KC_LVAI   , KC_LMOD   , KC____                                , KC_F10    , KC_F4     , KC_F5     , KC_F6     , KC____    , KC____    ,
+     KC_LTOG, KC_LHUI   , KC_LSAI   , KC_LVAI   , KC_LMOD   , KC____                                , KC_LANG5  , KC____    , KC____    , KC____    , KC____    , KC____    ,
   //|-------+-----------+-----------+-----------+-----------+-----------+-----------.    ,----------|-----------+-----------+-----------+-----------+-----------+-----------|
-     KC_LRST, KC_LHUD   , KC_LSAD   , KC_LVAD   , KC____    , KC_IJP	                              , KC_IEN    , KC_F1     , KC_F2     , KC_F3     , KC____    , KC____    ,
+     KC_LRST, KC_LHUD   , KC_LSAD   , KC_LVAD   , KC____    , KC_IEN	                              , KC_IJP    , KC____    , KC____    , KC____    , KC____    , KC____    ,
   //`-------+-----------+-----------+-----------+-----------+-----------+-----------/    \----------+-----------+-----------+-----------+-----------+-----------+-----------'
                                                   KC____    , KC____    , KC_NO          , KC_LEN   , KC____    , KC____
   //                                             `----------+-----------+-----------'    `----------+-----------+-----------'
@@ -394,12 +392,12 @@ void persistent_default_layer_set(uint16_t default_layer) {
   default_layer_set(default_layer);
 }
 
-// Setting ADJUST layer RGB back to default
-void update_tri_layer_RGB(uint8_t layer1, uint8_t layer2, uint8_t layer3) {
-  if (IS_LAYER_ON(layer1) && IS_LAYER_ON(layer2)) {
-    layer_on(layer3);
+// dening to change IME when already the layer is or
+void IME_change_resist(uint8_t layer1) {
+  if (IS_LAYER_ON(layer1)){
+    
   } else {
-    layer_off(layer3);
+    SEND_STRING(SS_TAP(X_LANG5));
   }
 }
 
@@ -416,49 +414,49 @@ void matrix_init_user(void) {
 //SSD1306 OLED update loop, make sure to add #define SSD1306OLED in config.h
 #ifdef SSD1306OLED
 
-// When add source files to SRC in rules.mk, you can use functions.
-const char *read_layer_state(void);
-const char *read_logo(void);
-void set_keylog(uint16_t keycode, keyrecord_t *record);
-const char *read_keylog(void);
-const char *read_keylogs(void);
+  // When add source files to SRC in rules.mk, you can use functions.
+  const char *read_layer_state(void);
+  const char *read_logo(void);
+  void set_keylog(uint16_t keycode, keyrecord_t *record);
+  const char *read_keylog(void);
+  const char *read_keylogs(void);
 
-// const char *read_mode_icon(bool swap);
-// const char *read_host_led_state(void);
-// void set_timelog(void);
-// const char *read_timelog(void);
+  // const char *read_mode_icon(bool swap);
+  const char *read_host_led_state(void);
+  // void set_timelog(void);
+  // const char *read_timelog(void);
 
-void matrix_scan_user(void) {
-   iota_gfx_task();
-}
-
-void matrix_render_user(struct CharacterMatrix *matrix) {
-  if (is_master) {
-    // If you want to change the display of OLED, you need to change here
-    matrix_write_ln(matrix, read_layer_state());
-    matrix_write_ln(matrix, read_keylog());
-    matrix_write_ln(matrix, read_keylogs());
-    //matrix_write_ln(matrix, read_mode_icon(keymap_config.swap_lalt_lgui));
-    //matrix_write_ln(matrix, read_host_led_state());
-    //matrix_write_ln(matrix, read_timelog());
-  } else {
-    matrix_write(matrix, read_logo());
+  void matrix_scan_user(void) {
+    iota_gfx_task();
   }
-}
 
-void matrix_update(struct CharacterMatrix *dest, const struct CharacterMatrix *source) {
-  if (memcmp(dest->display, source->display, sizeof(dest->display))) {
-    memcpy(dest->display, source->display, sizeof(dest->display));
-    dest->dirty = true;
+  void matrix_render_user(struct CharacterMatrix *matrix) {
+    if (is_master) {
+      // If you want to change the display of OLED, you need to change here
+      matrix_write_ln(matrix, read_layer_state());
+      //matrix_write_ln(matrix, read_keylog());
+      //matrix_write_ln(matrix, read_keylogs());
+      //matrix_write_ln(matrix, read_mode_icon(keymap_config.swap_lalt_lgui));
+      matrix_write_ln(matrix, read_host_led_state());
+      //matrix_write_ln(matrix, read_timelog());
+    } else {
+      matrix_write(matrix, read_logo());
+    }
   }
-}
 
-void iota_gfx_task_user(void) {
-  struct CharacterMatrix matrix;
-  matrix_clear(&matrix);
-  matrix_render_user(&matrix);
-  matrix_update(&display, &matrix);
-}
+  void matrix_update(struct CharacterMatrix *dest, const struct CharacterMatrix *source) {
+    if (memcmp(dest->display, source->display, sizeof(dest->display))) {
+      memcpy(dest->display, source->display, sizeof(dest->display));
+      dest->dirty = true;
+    }
+  }
+
+  void iota_gfx_task_user(void) {
+    struct CharacterMatrix matrix;
+    matrix_clear(&matrix);
+    matrix_render_user(&matrix);
+    matrix_update(&display, &matrix);
+  }
 #endif//SSD1306OLED
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
@@ -737,18 +735,23 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case IM_EN:
       if (record->event.pressed) {
         // when keycode IM_EN is pressed
-        SEND_STRING(SS_TAP(X_F23));        
+        IME_change_resist(0);
         layer_clear();
+        persistent_default_layer_set(1UL<< 0) ;   
         layer_on(0);
+        layer_on(10);
       }
       return false;
       break;
     case IM_JP:
       if (record->event.pressed) {
         // when keycode IM_JP is pressed
-        SEND_STRING(SS_TAP(X_F24));
+        //SEND_STRING(SS_TAP(X_LANG5));
+        IME_change_resist(2);
         layer_clear();
+        persistent_default_layer_set(1UL<< 2);  
         layer_on(2);
+        layer_on(10);
       }
       return false;
       break;
@@ -766,28 +769,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   }
   return true;
 }
-
-// control IME
-void dance_langnime_finished (qk_tap_dance_state_t *state, void *user_data) {
-  if (state->count == 1) {
-    register_code (KC_F23);
-  } else {
-    register_code (KC_F24);
-  }
-}
-
-void dance_langnime_reset (qk_tap_dance_state_t *state, void *user_data) {
-  if (state->count == 1) {
-    unregister_code (KC_F23);
-  } else {
-    unregister_code (KC_F24);
-  }
-}
-
-qk_tap_dance_action_t tap_dance_actions[] = {
-  [TD_LANGN]   = ACTION_TAP_DANCE_FN_ADVANCED_TIME(NULL, dance_langnime_finished, dance_langnime_reset,500)
-};
-
 
 //macros for numpad
 const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt) {
