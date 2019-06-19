@@ -35,6 +35,9 @@ enum {
     FUNC,
     SFUNC,
     EFUNC,
+    FUNCA,
+    SFUNCA,
+    EFUNCA,
 };
 
 enum custom_keycodes {
@@ -89,7 +92,7 @@ enum custom_keycodes {
   CL_NTM,
   BACKLIT,
   RGBRST,
-  LY_STS
+  OS_CM
 };
 
 //layer shorthands
@@ -104,6 +107,9 @@ enum custom_keycodes {
 #define _FUNC 8
 #define _SFUNC 9
 #define _EFUNC 10
+#define _FUNCA 11
+#define _SFUNCA 12
+#define _EFUNCA 13
 
 #define KC____ KC_TRNS
 
@@ -377,7 +383,47 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-------+-----------+-----------+-----------+-----------+-----------.                           ,-----------+-----------+-----------+-----------+-----------+-----------.
      KC_F1  , KC_F2     , KC_F3     , KC_F4     , KC_F5     , KC_F6                                 , KC_F7     , KC_F8     , KC_F9     , KC_F10    , KC_F11    , KC_F12    ,
   //|-------+-----------+-----------+-----------+-----------+-----------|                           |-----------+-----------+-----------+-----------+-----------+-----------|
-     KC_LTOG, KC_LHUI   , KC_LSAI   , KC_LVAI   , KC_LMOD   , LY_STS                                , KC_LANG5  , KC____    , KC____    , KC____    , KC____    , KC____    ,
+     KC_LTOG, KC_LHUI   , KC_LSAI   , KC_LVAI   , KC_LMOD   , OS_CM                                 , KC_LANG5  , KC____    , KC____    , KC____    , KC____    , KC____    ,
+  //|-------+-----------+-----------+-----------+-----------+-----------+-----------.    ,----------|-----------+-----------+-----------+-----------+-----------+-----------|
+     KC_LRST, KC_LHUD   , KC_LSAD   , KC_LVAD   , KC____    , KC_IEN	                              , KC_IJP    , KC____    , KC____    , KC____    , KC____    , KC____    ,
+  //`-------+-----------+-----------+-----------+-----------+-----------+-----------/    \----------+-----------+-----------+-----------+-----------+-----------+-----------'
+                                                  KC____    , KC____    , KC_NO          , KC_LEN   , KC____    , KC____
+  //                                             `----------+-----------+-----------'    `----------+-----------+-----------'
+  ),
+
+
+  //function keymap for english (IME: off)
+    [_FUNCA] = LAYOUT(
+  //,-------+-----------+-----------+-----------+-----------+-----------.                           ,-----------+-----------+-----------+-----------+-----------+-----------.
+     KC_ESC , C(KC_Y)   , G(KC_R)   , C(KC_R)   , C(KC_F)   , KC_DRNSH                              , KC_WOXM   , KC_HOME   , KC_UP     , KC_END    , C(KC_P)   , KC____    ,
+  //|-------+-----------+-----------+-----------+-----------+-----------|                           |-----------+-----------+-----------+-----------+-----------+-----------|
+     KC____ , C(KC_A)   , C(KC_S)   , C(KC_D)   , A(KC_A)   , KC_A                               , KC_NO     , KC_LEFT   , KC_DOWN   , KC_RGHT   , KC_NO     , KC_NO     ,
+  //|-------+-----------+-----------+-----------+-----------+-----------+-----------.    ,----------|-----------+-----------+-----------+-----------+-----------+-----------|
+     KC____ , C(KC_Z)   , C(KC_X)   , C(KC_C)   , C(KC_V)   , KC_SPC	                              , KC____    , KC_PGUP   , KC_NO     , KC_PGDN   , KC_NO     , KC____    ,
+  //`-------+-----------+-----------+-----------+-----------+-----------+-----------/    \----------+-----------+-----------+-----------+-----------+-----------+-----------'
+                                                  KC_LALT   , KC____    , KC_NO          , KC_LCTL  , KC_SF     , KC_NO 
+  //                                             `----------+-----------+-----------'    `----------+-----------+-----------'
+  ),
+
+  //shifted function keymap for english (IME: off)
+    [_SFUNCA] = LAYOUT(
+  //,-------+-----------+-----------+-----------+-----------+-----------.                           ,-----------+-----------+-----------+-----------+-----------+-----------.
+     KC____ , C(S(KC_Z)), KC____    , KC____    , C(KC_H)   , KC____                                , KC____    , KC____    , KC____    , KC____    , KC____    , KC____    ,
+  //|-------+-----------+-----------+-----------+-----------+-----------|                           |-----------+-----------+-----------+-----------+-----------+-----------|
+     KC____ , KC____    , KC____    , KC_D      , KC____    , KC____                                , KC____    , KC____    , KC____    , KC____    , KC____    , KC____    ,
+  //|-------+-----------+-----------+-----------+-----------+-----------+-----------.    ,----------|-----------+-----------+-----------+-----------+-----------+-----------|
+     KC____ , KC____    , KC____    , KC____    , KC____    , KC____	                              , KC____    , KC____    , KC____    , KC____   , KC____    , KC____    ,
+  //`-------+-----------+-----------+-----------+-----------+-----------+-----------/    \----------+-----------+-----------+-----------+-----------+-----------+-----------'
+                                                  KC____    , KC____    , KC_NO          , KC____   , KC_SF     , KC____
+  //                                             `----------+-----------+-----------'    `----------+-----------+-----------'
+  ),
+    
+  //extra function keymap for english (IME: off)
+    [_EFUNCA] = LAYOUT(
+  //,-------+-----------+-----------+-----------+-----------+-----------.                           ,-----------+-----------+-----------+-----------+-----------+-----------.
+     KC_F1  , KC_F2     , KC_F3     , KC_F4     , KC_F5     , KC_F6                                 , KC_F7     , KC_F8     , KC_F9     , KC_F10    , KC_F11    , KC_F12    ,
+  //|-------+-----------+-----------+-----------+-----------+-----------|                           |-----------+-----------+-----------+-----------+-----------+-----------|
+     KC_LTOG, KC_LHUI   , KC_LSAI   , KC_LVAI   , KC_LMOD   , OS_CM                                 , KC_LANG5  , KC____    , KC____    , KC____    , KC____    , KC____    ,
   //|-------+-----------+-----------+-----------+-----------+-----------+-----------.    ,----------|-----------+-----------+-----------+-----------+-----------+-----------|
      KC_LRST, KC_LHUD   , KC_LSAD   , KC_LVAD   , KC____    , KC_IEN	                              , KC_IJP    , KC____    , KC____    , KC____    , KC____    , KC____    ,
   //`-------+-----------+-----------+-----------+-----------+-----------+-----------/    \----------+-----------+-----------+-----------+-----------+-----------+-----------'
@@ -402,6 +448,41 @@ void IME_change_resist(uint8_t layer1) {
   }
 }
 
+void os_state_chnge(bool OS_State2){
+  if (OS_State2){
+          OS_State2 = !OS_State2;
+          #undef _FUNC
+          #undef _SFUNC
+          #undef _EFUNC
+          #undef _FUNCA
+          #undef _SFUNCA
+          #undef _EFUNCA
+
+          #define _FUNC 8
+          #define _SFUNC 9
+          #define _EFUNC 10
+          #define _FUNCA 11
+          #define _SFUNCA 12
+          #define _EFUNCA 13
+        }else{
+          OS_State2 = !OS_State2;
+          #undef _FUNC
+          #undef _SFUNC
+          #undef _EFUNC
+          #undef _FUNCA
+          #undef _SFUNCA
+          #undef _EFUNCA
+
+          #define _FUNC 11
+          #define _SFUNC 12
+          #define _EFUNC 13
+          #define _FUNCA 8
+          #define _SFUNCA 9
+          #define _EFUNCA 10
+
+        }
+}
+
 char *status_string[10];
 char *generate_layer_statuses(void){
   SEND_STRING("fuga");
@@ -415,6 +496,7 @@ char *generate_layer_statuses(void){
   return *status_string;
 
 }
+bool OS_State_mode = false;
 
 void matrix_init_user(void) {
     #ifdef RGBLIGHT_ENABLE
@@ -431,11 +513,12 @@ void matrix_init_user(void) {
 
   // When add source files to SRC in rules.mk, you can use functions.
   const char *read_layer_state(void);
-  const char *read_layer_state2(void);
+  const char *read_layer_state2(bool OS_State);
   const char *read_logo(void);
   void set_keylog(uint16_t keycode, keyrecord_t *record);
   const char *read_keylog(void);
   const char *read_keylogs(void);
+  const char *read_rgb_info(void);
 
   // const char *read_mode_icon(bool swap);
   const char *read_host_led_state(void);
@@ -454,9 +537,11 @@ void matrix_init_user(void) {
       //matrix_write_ln(matrix, read_keylogs());
       // matrix_write_ln(matrix, read_mode_icon(keymap_config.swap_lalt_lgui));
       matrix_write_ln(matrix, read_host_led_state());
+      matrix_write_ln(matrix, read_rgb_info());
       //matrix_write_ln(matrix, read_timelog());
     } else {
-      matrix_write_ln(matrix, read_layer_state2());
+      matrix_write(matrix, read_layer_state2(OS_State_mode));
+      //matrix_write(matrix, read_logo());
     }
   }
 
@@ -756,6 +841,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         persistent_default_layer_set(1UL<< 0) ;   
         layer_on(0);
         layer_on(10);
+        layer_off(2);
       }
       return false;
       break;
@@ -768,6 +854,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         persistent_default_layer_set(1UL<< 2);  
         layer_on(2);
         layer_on(10);
+        layer_off(0);
       }
       return false;
       break;
@@ -782,11 +869,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
       break;
-    case LY_STS:
+    /* case LY_STS:
       if (record->event.pressed) {
         // when keycode DF_WOXPASS is pressed
         SEND_STRING("hoge");
        generate_layer_statuses();
+      }
+      return false;
+      break; */
+    case OS_CM:
+      if (record->event.pressed) {
+        os_state_chnge(OS_State_mode);
       }
       return false;
       break;
