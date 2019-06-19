@@ -88,7 +88,8 @@ enum custom_keycodes {
   //layer change codes
   CL_NTM,
   BACKLIT,
-  RGBRST
+  RGBRST,
+  LY_STS
 };
 
 //layer shorthands
@@ -376,7 +377,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-------+-----------+-----------+-----------+-----------+-----------.                           ,-----------+-----------+-----------+-----------+-----------+-----------.
      KC_F1  , KC_F2     , KC_F3     , KC_F4     , KC_F5     , KC_F6                                 , KC_F7     , KC_F8     , KC_F9     , KC_F10    , KC_F11    , KC_F12    ,
   //|-------+-----------+-----------+-----------+-----------+-----------|                           |-----------+-----------+-----------+-----------+-----------+-----------|
-     KC_LTOG, KC_LHUI   , KC_LSAI   , KC_LVAI   , KC_LMOD   , KC____                                , KC_LANG5  , KC____    , KC____    , KC____    , KC____    , KC____    ,
+     KC_LTOG, KC_LHUI   , KC_LSAI   , KC_LVAI   , KC_LMOD   , LY_STS                                , KC_LANG5  , KC____    , KC____    , KC____    , KC____    , KC____    ,
   //|-------+-----------+-----------+-----------+-----------+-----------+-----------.    ,----------|-----------+-----------+-----------+-----------+-----------+-----------|
      KC_LRST, KC_LHUD   , KC_LSAD   , KC_LVAD   , KC____    , KC_IEN	                              , KC_IJP    , KC____    , KC____    , KC____    , KC____    , KC____    ,
   //`-------+-----------+-----------+-----------+-----------+-----------+-----------/    \----------+-----------+-----------+-----------+-----------+-----------+-----------'
@@ -401,6 +402,20 @@ void IME_change_resist(uint8_t layer1) {
   }
 }
 
+char *status_string[10];
+char *generate_layer_statuses(void){
+  SEND_STRING("fuga");
+  for(int i=1; i<=1; i++){
+    if(IS_LAYER_ON(i)){
+      snprintf(*status_string, sizeof(status_string), "%s%s", *status_string, "1");
+    } else {
+      snprintf(*status_string, sizeof(status_string), "%s%s", *status_string, "0");
+    }
+  }
+  return *status_string;
+
+}
+
 void matrix_init_user(void) {
     #ifdef RGBLIGHT_ENABLE
       RGB_current_mode = rgblight_config.mode;
@@ -416,6 +431,7 @@ void matrix_init_user(void) {
 
   // When add source files to SRC in rules.mk, you can use functions.
   const char *read_layer_state(void);
+  const char *read_layer_state2(void);
   const char *read_logo(void);
   void set_keylog(uint16_t keycode, keyrecord_t *record);
   const char *read_keylog(void);
@@ -436,11 +452,11 @@ void matrix_init_user(void) {
       matrix_write_ln(matrix, read_layer_state());
       //matrix_write_ln(matrix, read_keylog());
       //matrix_write_ln(matrix, read_keylogs());
-      //matrix_write_ln(matrix, read_mode_icon(keymap_config.swap_lalt_lgui));
+      // matrix_write_ln(matrix, read_mode_icon(keymap_config.swap_lalt_lgui));
       matrix_write_ln(matrix, read_host_led_state());
       //matrix_write_ln(matrix, read_timelog());
     } else {
-      matrix_write(matrix, read_logo());
+      matrix_write_ln(matrix, read_layer_state2());
     }
   }
 
@@ -763,6 +779,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }else{
         layer_off(4);
         layer_on(6);
+      }
+      return false;
+      break;
+    case LY_STS:
+      if (record->event.pressed) {
+        // when keycode DF_WOXPASS is pressed
+        SEND_STRING("hoge");
+       generate_layer_statuses();
       }
       return false;
       break;
