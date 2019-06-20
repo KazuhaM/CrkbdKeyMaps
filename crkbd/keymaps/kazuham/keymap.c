@@ -448,7 +448,7 @@ void IME_change_resist(uint8_t layer1) {
   }
 }
 
-void os_state_chnge(bool OS_State2){
+/* void os_state_chnge(bool OS_State2){
   if (OS_State2){
           OS_State2 = !OS_State2;
           #undef _FUNC
@@ -481,9 +481,9 @@ void os_state_chnge(bool OS_State2){
           #define _EFUNCA 10
 
         }
-}
+} */
 
-char *status_string[10];
+/* char *status_string[10];
 char *generate_layer_statuses(void){
   SEND_STRING("fuga");
   for(int i=1; i<=1; i++){
@@ -493,9 +493,9 @@ char *generate_layer_statuses(void){
       snprintf(*status_string, sizeof(status_string), "%s%s", *status_string, "0");
     }
   }
-  return *status_string;
+  return *status_string; 
 
-}
+}*/
 bool OS_State_mode = false;
 
 void matrix_init_user(void) {
@@ -879,7 +879,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       break; */
     case OS_CM:
       if (record->event.pressed) {
-        os_state_chnge(OS_State_mode);
+        //os_state_chnge(OS_State_mode);
+        OS_State_mode = !OS_State_mode;
+/*         #undef KC_SF MO(9)
+        #undef KC_NTM CL_NTM
+        #undef KC_LEN LT(10,KC_ENT)
+        #define KC_SF MO(9)
+        #define KC_NTM CL_NTM
+        #define KC_LEN LT(10,KC_ENT) */
       }
       return false;
       break;
