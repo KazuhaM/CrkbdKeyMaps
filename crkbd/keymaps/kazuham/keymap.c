@@ -90,9 +90,11 @@ enum custom_keycodes {
   
   //layer change codes
   CL_NTM,
-  BACKLIT,
   RGBRST,
-  OS_CM
+  OS_CM,
+  CL_FN,
+  CL_FS
+
 };
 
 //layer shorthands
@@ -109,7 +111,6 @@ enum custom_keycodes {
 #define _EFUNC 10
 #define _FUNCA 11
 #define _SFUNCA 12
-#define _EFUNCA 13
 
 #define KC____ KC_TRNS
 
@@ -120,8 +121,8 @@ enum custom_keycodes {
 #define KC_SMK LT(5,KC_SPC)
 #define KC_NUM TT(6)
 #define KC_SNM LT(7,KC_SPC)
-#define KC_FNC MO(8)
-#define KC_SF MO(9)
+#define KC_FNC CL_FN
+#define KC_SF CL_FS
 #define KC_NTM CL_NTM
 #define KC_LEN LT(10,KC_ENT)
 
@@ -159,55 +160,6 @@ enum custom_keycodes {
 #define KC_DWO DN_WO
 #define KC_DTSU DN_TSU
 #define KC_DNN DN_NN
-
-/* //special extension
-#define KC_SKK SE_KK
-#define KC_SKT SE_KT
-#define KC_SKN SE_KN
-#define KC_SKS SE_KS
-#define KC_SKM SE_KM
-#define KC_SKR SE_KR
-#define KC_SKB SE_KB
-#define KC_SSK SE_SK
-#define KC_SST SE_ST
-#define KC_SSN SE_SN
-#define KC_SSS SE_SS
-#define KC_SSM SE_SM
-#define KC_SSR SE_SR
-#define KC_SSB SE_SB
-#define KC_STK SE_TK
-#define KC_STT SE_TT
-#define KC_STN SE_TN
-#define KC_STS SE_TS
-#define KC_STM SE_TM
-#define KC_STR SE_TR
-#define KC_STB SE_TB
-#define KC_SHK SE_HK
-#define KC_SHT SE_HT
-#define KC_SHN SE_HN
-#define KC_SHS SE_HS
-#define KC_HMS SE_HM
-#define KC_SHR SE_HR
-#define KC_SHB SE_HB
-#define KC_SMK SE_MK
-#define KC_SMT SE_MT
-#define KC_SMN SE_MN
-#define KC_SMS SE_MS
-#define KC_SMM SE_MM
-#define KC_SMR SE_MR
-#define KC_SMB SE_MB
-#define KC_SNK SE_NK
-#define KC_SNT SE_NT
-#define KC_SNN SE_NN
-#define KC_SNS SE_NS
-#define KC_SNM SE_NM
-#define KC_SNR SE_NR
-#define KC_SNB SE_NB
-#define KC_SYK SE_YK
-#define KC_SYT SE_YT
-#define KC_SYS SE_YS
-#define KC_SYR SE_YR
-#define KC_SYB SE_YB */
 
 //mark
 #define KC_DBRCT DM_BRCT
@@ -248,7 +200,6 @@ enum custom_keycodes {
 #define KC_LSAD  RGB_SAD
 #define KC_LVAI  RGB_VAI
 #define KC_LVAD  RGB_VAD
-#define KC_LMOD  RGB_MOD
 
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -368,11 +319,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //shifted function keymap for english (IME: off)
     [_SFUNC] = LAYOUT(
   //,-------+-----------+-----------+-----------+-----------+-----------.                           ,-----------+-----------+-----------+-----------+-----------+-----------.
-     KC____ , C(S(KC_Z)), KC____    , KC____    , C(KC_H)   , KC____                                , KC____    , KC____    , KC____    , KC____    , KC____    , KC____    ,
+     KC____ , C(S(KC_Z)), KC____    , KC____    , C(KC_H)   , KC____                                , KC_MUTE   , KC_VOLD   , KC_VOLU   , KC____    , KC____    , KC____    ,
   //|-------+-----------+-----------+-----------+-----------+-----------|                           |-----------+-----------+-----------+-----------+-----------+-----------|
      KC____ , KC____    , KC____    , KC_D      , KC____    , KC____                                , KC____    , KC____    , KC____    , KC____    , KC____    , KC____    ,
   //|-------+-----------+-----------+-----------+-----------+-----------+-----------.    ,----------|-----------+-----------+-----------+-----------+-----------+-----------|
-     KC____ , KC____    , KC____    , KC____    , KC____    , KC____	                              , KC____    , KC____    , KC____    , KC____   , KC____    , KC____    ,
+     KC____ , KC____    , KC____    , KC____    , KC____    , KC____	                              , KC____    , KC____    , KC____    , KC____    , KC____    , KC____    ,
   //`-------+-----------+-----------+-----------+-----------+-----------+-----------/    \----------+-----------+-----------+-----------+-----------+-----------+-----------'
                                                   KC____    , KC____    , KC_NO          , KC____   , KC_SF     , KC____
   //                                             `----------+-----------+-----------'    `----------+-----------+-----------'
@@ -383,7 +334,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-------+-----------+-----------+-----------+-----------+-----------.                           ,-----------+-----------+-----------+-----------+-----------+-----------.
      KC_F1  , KC_F2     , KC_F3     , KC_F4     , KC_F5     , KC_F6                                 , KC_F7     , KC_F8     , KC_F9     , KC_F10    , KC_F11    , KC_F12    ,
   //|-------+-----------+-----------+-----------+-----------+-----------|                           |-----------+-----------+-----------+-----------+-----------+-----------|
-     KC_LTOG, KC_LHUI   , KC_LSAI   , KC_LVAI   , KC_LMOD   , OS_CM                                 , KC_LANG5  , KC____    , KC____    , KC____    , KC____    , KC____    ,
+     KC_LTOG, KC_LHUI   , KC_LSAI   , KC_LVAI   , KC____    , OS_CM                                 , KC_LANG5  , KC____    , KC_CAPS   , KC_INS    , KC_PSCR   , KC_NLCK   ,
   //|-------+-----------+-----------+-----------+-----------+-----------+-----------.    ,----------|-----------+-----------+-----------+-----------+-----------+-----------|
      KC_LRST, KC_LHUD   , KC_LSAD   , KC_LVAD   , KC____    , KC_IEN	                              , KC_IJP    , KC____    , KC____    , KC____    , KC____    , KC____    ,
   //`-------+-----------+-----------+-----------+-----------+-----------+-----------/    \----------+-----------+-----------+-----------+-----------+-----------+-----------'
@@ -391,19 +342,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //                                             `----------+-----------+-----------'    `----------+-----------+-----------'
   ),
 
-
   //function keymap for english (IME: off)
     [_FUNCA] = LAYOUT(
   //,-------+-----------+-----------+-----------+-----------+-----------.                           ,-----------+-----------+-----------+-----------+-----------+-----------.
-     KC_ESC , C(KC_Y)   , G(KC_R)   , C(KC_R)   , C(KC_F)   , KC_DRNSH                              , KC_WOXM   , KC_HOME   , KC_UP     , KC_END    , C(KC_P)   , KC____    ,
+     KC_ESC , C(KC_Y)   , G(KC_R)   , C(KC_R)   , C(KC_F)   , KC_DRNSH                              , KC____    , KC_HOME   , KC_UP     , KC_END    , C(KC_P)   , KC_LALT   ,
   //|-------+-----------+-----------+-----------+-----------+-----------|                           |-----------+-----------+-----------+-----------+-----------+-----------|
-     KC____ , C(KC_A)   , C(KC_S)   , C(KC_D)   , A(KC_A)   , KC_A                               , KC_NO     , KC_LEFT   , KC_DOWN   , KC_RGHT   , KC_NO     , KC_NO     ,
+     KC_LGUI, C(KC_A)   , C(KC_S)   , C(KC_D)   , G(KC_ENT) , A(KC_TAB)                             , G(KC_N)   , KC_LEFT   , KC_DOWN   , KC_RGHT   , KC_NO     , KC_NO     ,
   //|-------+-----------+-----------+-----------+-----------+-----------+-----------.    ,----------|-----------+-----------+-----------+-----------+-----------+-----------|
-     KC____ , C(KC_Z)   , C(KC_X)   , C(KC_C)   , C(KC_V)   , KC_SPC	                              , KC____    , KC_PGUP   , KC_NO     , KC_PGDN   , KC_NO     , KC____    ,
+     KC_LSFT, C(KC_Z)   , C(KC_X)   , C(KC_C)   , C(KC_V)   , KC_SPC	                              , G(KC_BSPC), KC_PGUP   , KC_NO     , KC_PGDN   , KC_NO     , KC_ENT   ,
   //`-------+-----------+-----------+-----------+-----------+-----------+-----------/    \----------+-----------+-----------+-----------+-----------+-----------+-----------'
                                                   KC_LALT   , KC____    , KC_NO          , KC_LCTL  , KC_SF     , KC_NO 
   //                                             `----------+-----------+-----------'    `----------+-----------+-----------'
-  ),
+  ),  
 
   //shifted function keymap for english (IME: off)
     [_SFUNCA] = LAYOUT(
@@ -415,19 +365,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      KC____ , KC____    , KC____    , KC____    , KC____    , KC____	                              , KC____    , KC____    , KC____    , KC____   , KC____    , KC____    ,
   //`-------+-----------+-----------+-----------+-----------+-----------+-----------/    \----------+-----------+-----------+-----------+-----------+-----------+-----------'
                                                   KC____    , KC____    , KC_NO          , KC____   , KC_SF     , KC____
-  //                                             `----------+-----------+-----------'    `----------+-----------+-----------'
-  ),
-    
-  //extra function keymap for english (IME: off)
-    [_EFUNCA] = LAYOUT(
-  //,-------+-----------+-----------+-----------+-----------+-----------.                           ,-----------+-----------+-----------+-----------+-----------+-----------.
-     KC_F1  , KC_F2     , KC_F3     , KC_F4     , KC_F5     , KC_F6                                 , KC_F7     , KC_F8     , KC_F9     , KC_F10    , KC_F11    , KC_F12    ,
-  //|-------+-----------+-----------+-----------+-----------+-----------|                           |-----------+-----------+-----------+-----------+-----------+-----------|
-     KC_LTOG, KC_LHUI   , KC_LSAI   , KC_LVAI   , KC_LMOD   , OS_CM                                 , KC_LANG5  , KC____    , KC____    , KC____    , KC____    , KC____    ,
-  //|-------+-----------+-----------+-----------+-----------+-----------+-----------.    ,----------|-----------+-----------+-----------+-----------+-----------+-----------|
-     KC_LRST, KC_LHUD   , KC_LSAD   , KC_LVAD   , KC____    , KC_IEN	                              , KC_IJP    , KC____    , KC____    , KC____    , KC____    , KC____    ,
-  //`-------+-----------+-----------+-----------+-----------+-----------+-----------/    \----------+-----------+-----------+-----------+-----------+-----------+-----------'
-                                                  KC____    , KC____    , KC_NO          , KC_LEN   , KC____    , KC____
   //                                             `----------+-----------+-----------'    `----------+-----------+-----------'
   ),
 };
@@ -448,54 +385,6 @@ void IME_change_resist(uint8_t layer1) {
   }
 }
 
-/* void os_state_chnge(bool OS_State2){
-  if (OS_State2){
-          OS_State2 = !OS_State2;
-          #undef _FUNC
-          #undef _SFUNC
-          #undef _EFUNC
-          #undef _FUNCA
-          #undef _SFUNCA
-          #undef _EFUNCA
-
-          #define _FUNC 8
-          #define _SFUNC 9
-          #define _EFUNC 10
-          #define _FUNCA 11
-          #define _SFUNCA 12
-          #define _EFUNCA 13
-        }else{
-          OS_State2 = !OS_State2;
-          #undef _FUNC
-          #undef _SFUNC
-          #undef _EFUNC
-          #undef _FUNCA
-          #undef _SFUNCA
-          #undef _EFUNCA
-
-          #define _FUNC 11
-          #define _SFUNC 12
-          #define _EFUNC 13
-          #define _FUNCA 8
-          #define _SFUNCA 9
-          #define _EFUNCA 10
-
-        }
-} */
-
-/* char *status_string[10];
-char *generate_layer_statuses(void){
-  SEND_STRING("fuga");
-  for(int i=1; i<=1; i++){
-    if(IS_LAYER_ON(i)){
-      snprintf(*status_string, sizeof(status_string), "%s%s", *status_string, "1");
-    } else {
-      snprintf(*status_string, sizeof(status_string), "%s%s", *status_string, "0");
-    }
-  }
-  return *status_string; 
-
-}*/
 bool OS_State_mode = false;
 
 void matrix_init_user(void) {
@@ -514,10 +403,10 @@ void matrix_init_user(void) {
   // When add source files to SRC in rules.mk, you can use functions.
   const char *read_layer_state(void);
   const char *read_layer_state2(bool OS_State);
-  const char *read_logo(void);
-  void set_keylog(uint16_t keycode, keyrecord_t *record);
-  const char *read_keylog(void);
-  const char *read_keylogs(void);
+  //const char *read_logo(void);
+  //void set_keylog(uint16_t keycode, keyrecord_t *record);
+  //const char *read_keylog(void);
+  //const char *read_keylogs(void);
   const char *read_rgb_info(void);
 
   // const char *read_mode_icon(bool swap);
@@ -562,23 +451,12 @@ void matrix_init_user(void) {
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   if (record->event.pressed) {
-#ifdef SSD1306OLED
+/* #ifdef SSD1306OLED
     set_keylog(keycode, record);
-#endif
+#endif */
     // set_timelog();
   }
-
   switch (keycode) {
-    case RGB_MOD:
-      #ifdef RGBLIGHT_ENABLE
-        if (record->event.pressed) {
-          rgblight_mode(RGB_current_mode);
-          rgblight_step();
-          RGB_current_mode = rgblight_config.mode;
-        }
-      #endif
-      return false;
-      break;
     case RGBRST:
       #ifdef RGBLIGHT_ENABLE
         if (record->event.pressed) {
@@ -869,24 +747,41 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
       break;
-    /* case LY_STS:
-      if (record->event.pressed) {
-        // when keycode DF_WOXPASS is pressed
-        SEND_STRING("hoge");
-       generate_layer_statuses();
-      }
-      return false;
-      break; */
     case OS_CM:
       if (record->event.pressed) {
-        //os_state_chnge(OS_State_mode);
         OS_State_mode = !OS_State_mode;
-/*         #undef KC_SF MO(9)
-        #undef KC_NTM CL_NTM
-        #undef KC_LEN LT(10,KC_ENT)
-        #define KC_SF MO(9)
-        #define KC_NTM CL_NTM
-        #define KC_LEN LT(10,KC_ENT) */
+      }
+      return false;
+      break;
+    case CL_FN:
+      if (OS_State_mode){
+        if (record->event.pressed) {
+          layer_on(11);
+        }else{
+          layer_off(11);
+        }
+      }else{
+        if (record->event.pressed) {
+          layer_on(8);
+        }else{
+          layer_off(8);
+        }
+      }
+      return false;
+      break;
+    case CL_FS:
+      if (OS_State_mode){
+        if (record->event.pressed) {
+          layer_on(12);
+        }else{
+          layer_off(12);
+        }
+      }else{
+        if (record->event.pressed) {
+          layer_on(9);
+        }else{
+          layer_off(9);
+        }
       }
       return false;
       break;
