@@ -88,7 +88,8 @@ enum custom_keycodes {
   //layer change codes
   CL_NTM,
   RGBRST,
-  OS_CM,
+  OS_CMA,
+  OS_CMW,
   CL_FN,
   CL_FS
 
@@ -127,6 +128,7 @@ enum custom_keycodes {
 //IME change
 #define KC_IEN IM_EN
 #define KC_IJP IM_JP
+#define KC_CHIME LALT(KC_GRAVE)
 
 //diphthong
 #define KC_DUU DI_UU
@@ -213,9 +215,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     //,-------+-----------+-----------+-----------+-----------+-----------.                           ,-----------+-----------+-----------+-----------+-----------+-----------.
       KC____  , S(KC_X)   , S(KC_Y)   , S(KC_O)   , S(KC_U)   , S(KC_Q)                               , S(KC_W)   , S(KC_D)   , S(KC_L)   , S(KC_N)   , S(KC_V)   , KC____    ,\
   //|---------+-----------+-----------+-----------+-----------+-----------|                           |-----------+-----------+-----------+-----------+-----------+-----------|
-      KC____  , S(KC_H)   , S(KC_I)   , S(KC_E)   , S(KC_A)   , KC_COLN                               , S(KC_G)   , S(KC_S)   , S(KC_T)   , S(KC_R)   , S(KC_P)   , S(KC_F)   ,\
+      KC____  , S(KC_H)   , S(KC_I)   , S(KC_E)   , S(KC_A)   , JP_COLN                               , S(KC_G)   , S(KC_S)   , S(KC_T)   , S(KC_R)   , S(KC_P)   , S(KC_F)   ,\
   //|---------+-----------+-----------+-----------+-----------+-----------+-----------.    ,----------|-----------+-----------+-----------+-----------+-----------+-----------|
-      KC____  , KC_SCLN   , KC_DQT    , S(KC_J)   , S(KC_Z)   , KC____                                , KC____    , S(KC_C)   , S(KC_M)   , S(KC_B)   , S(KC_K)   , KC____    ,\
+      KC____  , JP_SCLN   , KC_DQT    , S(KC_J)   , S(KC_Z)   , KC____                                , KC____    , S(KC_C)   , S(KC_M)   , S(KC_B)   , S(KC_K)   , KC____    ,\
   //`---------+-----------+-----------+-----------+-----------+-----------+-----------/    \----------+-----------+-----------+-----------+-----------+-----------+-----------'
                                                   KC____    , KC_FNC    , KC_SEN         , KC____   , KC____    , KC____ \
   //                                             `----------+-----------+-----------'    `----------+-----------+-----------'
@@ -233,19 +235,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //                  `----+----+----'        `----+----+----'
   ),
 
-  [_SMSKYTOUCH] = LAYOUT_kc( \
-  //|----+----+----+----+----+----|              |----+----+----+----+----+----|
-     ___ ,SCLN, ___, J  , F  , Q                 , DUI, DAA, DOO,COLN, DIU, ___,
-  //|----+----+----+----+----+----|              |----+----+----+----+----+----|
-     ___ , ___, Z  , D  , G  , DNN               ,DUNN,DANN,DONN,DINN,DENN,SLSH,
-  //|----+----+----+----+----+----+----.    ,----|----+----+----+----+----+----|
-     ___ , B  , V  , P  , B  , ___                ,___ , DAE, DOA, DIA, DIO, ___,
-  //`----+----+----+----+----+----+----/    \----+----+----+----+----+----+----'
-                       ___ , FNC, SJP         ,___ , ___,___
-                 //`--------------------'  `--------------------'
+  [_SMSKYTOUCH] = LAYOUT( \
+    //,-------+-----------+-----------+-----------+-----------+-----------.                           ,-----------+-----------+-----------+-----------+-----------+-----------.
+      KC____  ,JP_SCLN    , KC____    , KC_J      , KC_F      , KC_Q                                  , KC_DUI    , KC_DAA    , KC_DOO    ,JP_COLN    , KC_DIU    , KC____    ,
+    //,-------+-----------+-----------+-----------+-----------+-----------.                           ,-----------+-----------+-----------+-----------+-----------+-----------.
+      KC____  , KC____    , KC_Z      , KC_D      , KC_G      , KC_DNN                                ,KC_DUNN    ,KC_DANN    ,KC_DONN    ,KC_DINN    ,KC_DENN    ,KC_SLSH    ,
+    //,-------+-----------+-----------+-----------+-----------+-----------.                           ,-----------+-----------+-----------+-----------+-----------+-----------.
+      KC____  , KC_B      , KC_V      , KC_P      , KC_B      , KC____                                ,KC____     , KC_DAE    , KC_DOA    , KC_DIA    , KC_DIO    , KC____    ,
+  //`---------+-----------+-----------+-----------+-----------+-----------+-----------/    \----------+-----------+-----------+-----------+-----------+-----------+-----------'
+                                                  KC____    , KC_FNC    , KC_SJP         ,KC____    , KC____    ,KC____
+  //                                             `----------+-----------+-----------'    `----------+-----------+-----------'
   ),
 
-  //mark (symbol) keymap for english (IME: off)
+
     [_MARK] = LAYOUT(
   //,-------+-----------+-----------+-----------+-----------+-----------.                           ,-----------+-----------+-----------+-----------+-----------+-----------.
      KC____ , JP_LT     , JP_GT     , JP_LBRC   , JP_RBRC   , JP_AMPR                               , JP_EQL    , JP_EXLM   , JP_BSLS   , JP_PERC   , JP_MINS   , KC____    ,
@@ -258,7 +260,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //                                             `----------+-----------+-----------'    `----------+-----------+-----------'
   ),
 
-   //mark (symbol) keymap for english (IME: off)
     [_SMARK] = LAYOUT(
   //,-------+-----------+-----------+-----------+-----------+-----------.                           ,-----------+-----------+-----------+-----------+-----------+-----------.
      KC____ , KC____    , JP_SLSH   , JP_UNDS   , JP_MINS   , JP_EXLM                               , JP_BSLS   , JP_CIRC   , JP_SCLN   , JP_ASTR   , JP_SCLN   , JP_COLN  ,
@@ -271,12 +272,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //                                             `----------+-----------+-----------'    `----------+-----------+-----------'
   ),
 
-  //number and allows keymap for english (IME: off)
     [_NUM] = LAYOUT(
   //,-------+-----------+-----------+-----------+-----------+-----------.                           ,-----------+-----------+-----------+-----------+-----------+-----------.
      KC____ , JP_LPRN   , KC_HOME   , KC_UP     , KC_END    , JP_AMPR                               , JP_EQL    , KC_NP7    , KC_NP8    , KC_NP9    , KC_NPMNS  , KC____    ,
   //|-------+-----------+-----------+-----------+-----------+-----------|                           |-----------+-----------+-----------+-----------+-----------+-----------|
-     KC____ , JP_RPRN   , KC_LEFT   , KC_DOWN   , KC_RGHT   , KC_DLR                                , KC_NP0    , KC_NP4    , KC_NP5    , KC_NP6    , KC_NPPLS  , KC____    ,
+     KC____ , JP_RPRN   , KC_LEFT   , KC_DOWN   , KC_RGHT   , JP_DLR                                , KC_NP0    , KC_NP4    , KC_NP5    , KC_NP6    , KC_NPPLS  , KC____    ,
   //|-------+-----------+-----------+-----------+-----------+-----------+-----------.    ,----------|-----------+-----------+-----------+-----------+-----------+-----------|
      KC____ , KC_COMM   , KC_PGUP   , JP_COLN   , KC_PGDN   , KC____	                              , KC____    , KC_NP1    , KC_NP2    , KC_NP3    , KC_NPDOT  , KC____    ,
   //`-------+-----------+-----------+-----------+-----------+-----------+-----------/    \----------+-----------+-----------+-----------+-----------+-----------+-----------'
@@ -284,7 +284,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //                                             `----------+-----------+-----------'    `----------+-----------+-----------'
   ),
 
-    //number and allows keymap for english (IME: off)
     [_SNUM] = LAYOUT(
   //,-------+-----------+-----------+-----------+-----------+-----------.                           ,-----------+-----------+-----------+-----------+-----------+-----------.
      KC____ , KC____    , KC____    , KC____    , KC____    , KC____                                , JP_BSLS   , JP_CIRC   , KC_NPSLS  , KC_NPAST  , KC_SCLN   , KC____    ,
@@ -297,7 +296,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //                                             `----------+-----------+-----------'    `----------+-----------+-----------'
   ),
 
-  //function keymap for english (IME: off)
+  //function keymap for windows
     [_FUNC] = LAYOUT(
   //,-------+-----------+-----------+-----------+-----------+-----------.                           ,-----------+-----------+-----------+-----------+-----------+-----------.
      KC_ESC , C(KC_Y)   , G(KC_R)   , C(KC_R)   , C(KC_F)   , KC_DRNSH                              , KC____    , KC_HOME   , KC_UP     , KC_END    , C(KC_P)   , KC____    ,
@@ -310,7 +309,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //                                             `----------+-----------+-----------'    `----------+-----------+-----------'
   ),
 
-  //shifted function keymap for english (IME: off)
+  //shifted function keymap for windows
     [_SFUNC] = LAYOUT(
   //,-------+-----------+-----------+-----------+-----------+-----------.                           ,-----------+-----------+-----------+-----------+-----------+-----------.
      KC____ , C(S(KC_Z)), KC____    , KC____    , C(KC_H)   , KC____                                , KC_MUTE   , KC_VOLD   , KC_VOLU   , KC____    , KC____    , KC____    ,
@@ -323,12 +322,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //                                             `----------+-----------+-----------'    `----------+-----------+-----------'
   ),
     
-  //extra function keymap for english (IME: off)
+  //extra function keymap for windows 
     [_EFUNC] = LAYOUT(
   //,-------+-----------+-----------+-----------+-----------+-----------.                           ,-----------+-----------+-----------+-----------+-----------+-----------.
      KC_F1  , KC_F2     , KC_F3     , KC_F4     , KC_F5     , KC_F6                                 , KC_F7     , KC_F8     , KC_F9     , KC_F10    , KC_F11    , KC_F12    ,
   //|-------+-----------+-----------+-----------+-----------+-----------|                           |-----------+-----------+-----------+-----------+-----------+-----------|
-     KC_LTOG, KC_LHUI   , KC_LSAI   , KC_LVAI   , KC____    , OS_CM                                 , KC_LANG5  , KC____    , KC_CAPS   , KC_INS    , KC_PSCR   , KC_NLCK   ,
+     KC_LTOG, KC_LHUI   , KC_LSAI   , KC_LVAI   , KC_CHIME  , OS_CMW                                , OS_CMA    , KC_LANG5  , KC_CAPS   , KC_INS    , KC_PSCR   , KC_NLCK   ,
   //|-------+-----------+-----------+-----------+-----------+-----------+-----------.    ,----------|-----------+-----------+-----------+-----------+-----------+-----------|
      KC_LRST, KC_LHUD   , KC_LSAD   , KC_LVAD   , KC____    , KC_IEN	                              , KC_IJP    , KC____    , KC____    , KC____    , KC____    , KC____    ,
   //`-------+-----------+-----------+-----------+-----------+-----------+-----------/    \----------+-----------+-----------+-----------+-----------+-----------+-----------'
@@ -336,7 +335,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //                                             `----------+-----------+-----------'    `----------+-----------+-----------'
   ),
 
-  //function keymap for english (IME: off)
+  //function keymap for android
     [_FUNCA] = LAYOUT(
   //,-------+-----------+-----------+-----------+-----------+-----------.                           ,-----------+-----------+-----------+-----------+-----------+-----------.
      KC_ESC , C(KC_Y)   , G(KC_R)   , C(KC_R)   , C(KC_F)   , KC_DRNSH                              , KC____    , KC_HOME   , KC_UP     , KC_END    , C(KC_P)   , KC_LALT   ,
@@ -349,7 +348,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //                                             `----------+-----------+-----------'    `----------+-----------+-----------'
   ),  
 
-  //shifted function keymap for english (IME: off)
+  //shifted function keymap for android
     [_SFUNCA] = LAYOUT(
   //,-------+-----------+-----------+-----------+-----------+-----------.                           ,-----------+-----------+-----------+-----------+-----------+-----------.
      KC____ , C(S(KC_Z)), KC____    , KC____    , C(KC_H)   , KC____                                , KC____    , KC____    , KC____    , KC____    , KC____    , KC____    ,
@@ -709,13 +708,26 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
       break;
-    case OS_CM:
+    case OS_CMW:
       if (record->event.pressed) {
-        OS_State_mode = !OS_State_mode;
-        os_state_led = 210 - os_state_led;
+        OS_State_mode = false;
+        os_state_led = 190;
         for (size_t i = 0; i < 27; i++)
       {
-        sethsv(os_state_led,255,120, (LED_TYPE *)&led[i]);
+        sethsv(os_state_led,255,105, (LED_TYPE *)&led[i]);
+      }
+      rgblight_config.hue=os_state_led;
+      rgblight_set(); 
+      }
+      return false;
+      break;
+    case OS_CMA:
+      if (record->event.pressed) {
+        OS_State_mode = true;
+        os_state_led = 20;
+        for (size_t i = 0; i < 27; i++)
+      {
+        sethsv(os_state_led,255,105, (LED_TYPE *)&led[i]);
       }
       rgblight_config.hue=os_state_led;
       rgblight_set(); 
