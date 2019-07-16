@@ -83,9 +83,6 @@ enum custom_keycodes {
 
   //function code
   DF_RNMSH,
-  DF_WOXSET,
-  DF_WOXML,
-  DF_WOXGMSC,
   DF_WOXPASS,
   
   //layer change codes
@@ -169,9 +166,6 @@ enum custom_keycodes {
 
 //function
 #define KC_DRNSH DF_RNMSH
-#define KC_WOXS DF_WOXSET
-#define KC_WOXM DF_WOXML
-#define KC_WOXG DF_WOXGMSC
 #define KC_WOXP DF_WOXPASS
 
 //macros for numpad
@@ -278,35 +272,35 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   //number and allows keymap for english (IME: off)
-    [_NUM] = LAYOUT_kc(
+    [_NUM] = LAYOUT(
   //,-------+-----------+-----------+-----------+-----------+-----------.                           ,-----------+-----------+-----------+-----------+-----------+-----------.
-     ___    , LPRN      , HOME      , UP        , END       , AMPR                                  , EQL       , NP7       , NP8       , NP9       , NPMNS     , ___       ,
+     KC____ , JP_LPRN   , KC_HOME   , KC_UP     , KC_END    , JP_AMPR                               , JP_EQL    , KC_NP7    , KC_NP8    , KC_NP9    , KC_NPMNS  , KC____    ,
   //|-------+-----------+-----------+-----------+-----------+-----------|                           |-----------+-----------+-----------+-----------+-----------+-----------|
-     ___    , RPRN  	  , LEFT      , DOWN      , RGHT      , DLR                                   , NP0       , NP4       , NP5       , NP6       , NPPLS     , ___      ,
+     KC____ , JP_RPRN   , KC_LEFT   , KC_DOWN   , KC_RGHT   , KC_DLR                                , KC_NP0    , KC_NP4    , KC_NP5    , KC_NP6    , KC_NPPLS  , KC____    ,
   //|-------+-----------+-----------+-----------+-----------+-----------+-----------.    ,----------|-----------+-----------+-----------+-----------+-----------+-----------|
-     ___    , COMM      , PGUP      , COLN      , PGDN      , ___	                                  , ___       , NP1       , NP2       , NP3       , NPDOT     , ___       ,
+     KC____ , KC_COMM   , KC_PGUP   , JP_COLN   , KC_PGDN   , KC____	                              , KC____    , KC_NP1    , KC_NP2    , KC_NP3    , KC_NPDOT  , KC____    ,
   //`-------+-----------+-----------+-----------+-----------+-----------+-----------/    \----------+-----------+-----------+-----------+-----------+-----------+-----------'
-                                                  ___       , ___       , SNM            , ___      , NP0       , NTM
+                                                  KC____    , KC____    , KC_SNM         , KC____   , KC_NP0    , KC_NTM
   //                                             `----------+-----------+-----------'    `----------+-----------+-----------'
   ),
 
     //number and allows keymap for english (IME: off)
-    [_SNUM] = LAYOUT_kc(
+    [_SNUM] = LAYOUT(
   //,-------+-----------+-----------+-----------+-----------+-----------.                           ,-----------+-----------+-----------+-----------+-----------+-----------.
-     ___    , ___       , ___       , ___       , ___       , ___                                   , BSLS      , CIRC      , NPSLS     , NPAST     , SCLN      , CALC      ,
+     KC____ , KC____    , KC____    , KC____    , KC____    , KC____                                , JP_BSLS   , JP_CIRC   , KC_NPSLS  , KC_NPAST  , KC_SCLN   , KC____    ,
   //|-------+-----------+-----------+-----------+-----------+-----------|                           |-----------+-----------+-----------+-----------+-----------+-----------|
-     ___    , ___       , ___       , ___       , ___       , ___                                   , ___       , ___       , ___       , ___       , ___       , ___       ,
+     KC____ , KC____    , KC____    , KC____    , KC____    , KC____                                , KC____    , KC____    , KC____    , KC____    , KC____    , KC____    ,
   //|-------+-----------+-----------+-----------+-----------+-----------+-----------.    ,----------|-----------+-----------+-----------+-----------+-----------+-----------|
-     ___    , ___       , ___       , ___       , ___       , ___                                   , ___       , ___       , ___       , ___       , ___       , ___       ,
+     KC____ , KC____    , KC____    , KC____    , KC____    , KC____                                , KC____    , KC____    , KC____    , KC____    , KC____    , KC____    ,
   //`-------+-----------+-----------+-----------+-----------+-----------+-----------/    \----------+-----------+-----------+-----------+-----------+-----------+-----------'
-                                                  ___       , ___       , SNM            , ___      , NP0       , NTM
+                                                  KC____    , KC____    , KC_SNM         , KC____   , KC_NP0    , KC_NTM
   //                                             `----------+-----------+-----------'    `----------+-----------+-----------'
   ),
 
   //function keymap for english (IME: off)
     [_FUNC] = LAYOUT(
   //,-------+-----------+-----------+-----------+-----------+-----------.                           ,-----------+-----------+-----------+-----------+-----------+-----------.
-     KC_ESC , C(KC_Y)   , G(KC_R)   , C(KC_R)   , C(KC_F)   , KC_DRNSH                              , KC_WOXM   , KC_HOME   , KC_UP     , KC_END    , C(KC_P)   , KC____    ,
+     KC_ESC , C(KC_Y)   , G(KC_R)   , C(KC_R)   , C(KC_F)   , KC_DRNSH                              , KC____    , KC_HOME   , KC_UP     , KC_END    , C(KC_P)   , KC____    ,
   //|-------+-----------+-----------+-----------+-----------+-----------|                           |-----------+-----------+-----------+-----------+-----------+-----------|
      KC____ , C(KC_A)   , C(KC_S)   , C(KC_D)   , A(KC_A)   , KC_WOXP                               , KC_NO     , KC_LEFT   , KC_DOWN   , KC_RGHT   , KC_NO     , KC_NO     ,
   //|-------+-----------+-----------+-----------+-----------+-----------+-----------.    ,----------|-----------+-----------+-----------+-----------+-----------+-----------|
@@ -449,13 +443,8 @@ void matrix_init_user(void) {
   }
 #endif//SSD1306OLED
 
+int os_state_led = 190 ;
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  if (record->event.pressed) {
-/* #ifdef SSD1306OLED
-    set_keylog(keycode, record);
-#endif */
-    // set_timelog();
-  }
   switch (keycode) {
     case RGBRST:
       #ifdef RGBLIGHT_ENABLE
@@ -674,33 +663,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
       break;
-    case DF_WOXSET:
-      if (record->event.pressed) {
-        // when keycode DF_WOXSET is pressed
-        SEND_STRING(SS_LALT("s"));
-      }else{
-        SEND_STRING(SS_TAP(X_ENTER));
-      }
-      return false;
-      break;
-    case DF_WOXML:
-      if (record->event.pressed) {
-        // when keycode DF_WOXMLis pressed
-        SEND_STRING(SS_LALT("m"));
-      }else{
-        SEND_STRING(SS_TAP(X_ENTER));
-      }
-      return false;
-      break;
-    case DF_WOXGMSC:
-      if (record->event.pressed) {
-        // when keycode DF_WOXGMSC is pressed
-        SEND_STRING(SS_LALT("g"));
-      }else{
-        SEND_STRING(SS_TAP(X_ENTER));
-      }
-      return false;
-      break;
     case DF_WOXPASS:
       if (record->event.pressed) {
         // when keycode DF_WOXPASS is pressed
@@ -750,6 +712,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case OS_CM:
       if (record->event.pressed) {
         OS_State_mode = !OS_State_mode;
+        os_state_led = 210 - os_state_led;
+        for (size_t i = 0; i < 27; i++)
+      {
+        sethsv(os_state_led,255,120, (LED_TYPE *)&led[i]);
+      }
+      rgblight_config.hue=os_state_led;
+      rgblight_set(); 
       }
       return false;
       break;

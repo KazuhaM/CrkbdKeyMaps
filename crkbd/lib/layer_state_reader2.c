@@ -13,6 +13,8 @@
 #define L_FUNC 256
 #define L_SFUNC 512
 #define L_EFUNC 1024
+#define L_FUNCA 2048
+#define L_SFUNCA 4096
 
 //char layer_state_str2[85];
 const char *read_layer_state2(bool OS_State) {
@@ -192,8 +194,8 @@ if (OS_State) {
     logo[55] = 0xd2;
   }
 //Func and Shift Func Layer
-  if ((layer_state / L_FUNC) % 2 == 1) {
-    if ((layer_state / L_SFUNC) % 2 == 1) {
+  if ((layer_state / L_FUNC) % 2 == 1 || (layer_state / L_FUNCA) % 2 == 1 ) {
+    if ((layer_state / L_SFUNC) % 2 == 1 || (layer_state / L_SFUNCA) % 2 == 1 ) {
       if ((layer_state / L_EFUNC) % 2 == 1) {
         logo[10] = 0x91;  //rune up right
         logo[11] = 0x92;  //rune down right
@@ -226,7 +228,7 @@ if (OS_State) {
         logo[53] = 0xd2;
       }
     }
-  }else if ((layer_state / L_SFUNC) % 2 == 1) {
+  }else if ((layer_state / L_SFUNC) % 2 == 1 || (layer_state / L_SFUNCA) % 2 == 1 ) {
       if ((layer_state / L_EFUNC) % 2 == 1) {
         logo[10] = 0x91;  //rune up right
         logo[11] = 0x92;  //rune down right

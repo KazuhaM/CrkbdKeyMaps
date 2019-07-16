@@ -13,15 +13,17 @@
 #define L_FUNC 256
 #define L_SFUNC 512
 #define L_EFUNC 1024
+#define L_FUNCA 2048
+#define L_SFUNCA 4096
 
 char layer_state_str[24];
 
 const char *read_layer_state(void) {
   if ((layer_state / L_EFUNC) % 2 == 1){
     snprintf(layer_state_str, sizeof(layer_state_str), "Layer: E_Function");
-  }else if ((layer_state / L_SFUNC) % 2 == 1){
+  }else if ((layer_state / L_SFUNC) % 2 == 1 || (layer_state / L_SFUNCA) % 2 == 1 ){
     snprintf(layer_state_str, sizeof(layer_state_str), "Layer: S_Function");
-  }else if ((layer_state / L_FUNC) % 2 == 1){
+  }else if ((layer_state / L_FUNC) % 2 == 1 || (layer_state / L_FUNCA) % 2 == 1 ){
     snprintf(layer_state_str, sizeof(layer_state_str), "Layer: Function");
   }else if ((layer_state / L_SNUM) % 2 == 1){
     snprintf(layer_state_str, sizeof(layer_state_str), "Layer: S_Numpad");
