@@ -305,14 +305,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|-------+-----------+-----------+-----------+-----------+-----------+-----------.    ,----------|-----------+-----------+-----------+-----------+-----------+-----------|
      KC____ , C(KC_Z)   , C(KC_X)   , C(KC_C)   , C(KC_V)   , KC_SPC	                              , KC____    , KC_PGUP   , KC_NO     , KC_PGDN   , KC_NO     , KC____    ,
   //`-------+-----------+-----------+-----------+-----------+-----------+-----------/    \----------+-----------+-----------+-----------+-----------+-----------+-----------'
-                                                  KC_LALT   , KC____    , KC_NO          , KC_LCTL  , KC_SF     , KC_NO 
+                                                  KC_LALT   , KC____    , KC_NO          , KC_LCTL  , KC_SF     , KC_NO
   //                                             `----------+-----------+-----------'    `----------+-----------+-----------'
   ),
 
   //shifted function keymap for windows
     [_SFUNC] = LAYOUT(
   //,-------+-----------+-----------+-----------+-----------+-----------.                           ,-----------+-----------+-----------+-----------+-----------+-----------.
-     KC____ , C(S(KC_Z)), KC____    , KC____    , C(KC_H)   , KC____                                , KC_MUTE   , KC_VOLD   , KC_VOLU   , KC____    , KC____    , KC____    ,
+     KC____ , C(S(KC_Z)), KC____    , KC____    , C(KC_H)   , KC____                                , KC_MUTE   , KC_VOLD   , KC_VOLU   , KC____    , KC_F23    , KC_F24    ,
   //|-------+-----------+-----------+-----------+-----------+-----------|                           |-----------+-----------+-----------+-----------+-----------+-----------|
      KC____ , KC____    , KC____    , KC_D      , KC____    , KC____                                , KC____    , KC____    , KC____    , KC____    , KC____    , KC____    ,
   //|-------+-----------+-----------+-----------+-----------+-----------+-----------.    ,----------|-----------+-----------+-----------+-----------+-----------+-----------|
@@ -374,7 +374,9 @@ void IME_change_resist(uint8_t layer1) {
   if (IS_LAYER_ON(layer1)){
     
   } else {
-    SEND_STRING(SS_TAP(X_LANG5));
+    register_code(KC_LALT);
+    tap_code(KC_GRAVE);
+    unregister_code(KC_LALT);
   }
 }
 
@@ -439,7 +441,7 @@ void matrix_init_user(void) {
     matrix_clear(&matrix);
     matrix_render_user(&matrix);
     matrix_update(&display, &matrix);
-  }
+  }c
 #endif//SSD1306OLED
 
 int os_state_led = 190 ;
@@ -675,6 +677,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case IM_EN:
       if (record->event.pressed) {
         // when keycode IM_EN is pressed
+        // SEND_STRING(SS_TAP(X_F23));  
         IME_change_resist(0);
         layer_clear();
         persistent_default_layer_set(1UL<< 0) ;   
@@ -689,6 +692,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         // when keycode IM_JP is pressed
         //SEND_STRING(SS_TAP(X_LANG5));
         IME_change_resist(2);
+        // SEND_STRING(SS_TAP(X_F24)); 
         layer_clear();
         persistent_default_layer_set(1UL<< 2);  
         layer_on(2);
