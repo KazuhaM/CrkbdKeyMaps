@@ -338,11 +338,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //function keymap for android
     [_FUNCA] = LAYOUT(
   //,-------+-----------+-----------+-----------+-----------+-----------.                           ,-----------+-----------+-----------+-----------+-----------+-----------.
-     KC_ESC , C(KC_Y)   , G(KC_R)   , C(KC_R)   , C(KC_F)   , KC_DRNSH                              , KC____    , KC_HOME   , KC_UP     , KC_END    , C(KC_P)   , KC_LALT   ,
+     KC_ESC , C(KC_Y)   , G(KC_R)   , C(KC_R)   , C(KC_F)   , KC_DRNSH                              , G(KC_N)   , KC_HOME   , KC_UP     , KC_END    , C(KC_P)   , KC_LALT   ,
   //|-------+-----------+-----------+-----------+-----------+-----------|                           |-----------+-----------+-----------+-----------+-----------+-----------|
-     KC_LGUI, C(KC_A)   , C(KC_S)   , C(KC_D)   , G(KC_ENT) , A(KC_TAB)                             , G(KC_N)   , KC_LEFT   , KC_DOWN   , KC_RGHT   , KC_NO     , KC_NO     ,
+     KC_LGUI, C(KC_A)   , C(KC_S)   , C(KC_D)   , G(KC_ENT) , A(KC_TAB)                             , G(KC_B)   , KC_LEFT   , KC_DOWN   , KC_RGHT   , G(KC_C)   , KC_NO     ,
   //|-------+-----------+-----------+-----------+-----------+-----------+-----------.    ,----------|-----------+-----------+-----------+-----------+-----------+-----------|
-     KC_LSFT, C(KC_Z)   , C(KC_X)   , C(KC_C)   , C(KC_V)   , KC_SPC	                              , G(KC_BSPC), KC_PGUP   , KC_NO     , KC_PGDN   , KC_NO     , KC_ENT   ,
+     KC_LSFT, C(KC_Z)   , C(KC_X)   , C(KC_C)   , C(KC_V)   , KC_SPC	                              , G(KC_BSPC), KC_PGUP   , KC_NO     , KC_PGDN   , G(KC_A)   , KC_ENT   ,
   //`-------+-----------+-----------+-----------+-----------+-----------+-----------/    \----------+-----------+-----------+-----------+-----------+-----------+-----------'
                                                   KC_LALT   , KC____    , KC_NO          , KC_LCTL  , KC_SF     , KC_NO 
   //                                             `----------+-----------+-----------'    `----------+-----------+-----------'
@@ -369,16 +369,19 @@ void persistent_default_layer_set(uint16_t default_layer) {
   default_layer_set(default_layer);
 }
 
-// dening to change IME when already the layer is or
-void IME_change_resist(uint8_t layer1) {
-  if (IS_LAYER_ON(layer1)){
+// // dening to change IME when already the layer is or
+// void IME_change_resist(uint8_t layer1) {
+//   if (IS_LAYER_ON(layer1)){
     
-  } else {
-    register_code(KC_LALT);
-    tap_code(KC_GRAVE);
-    unregister_code(KC_LALT);
-  }
-}
+//   } else {
+//     register_code(KC_LALT);
+//     register_code(KC_GRAVE);
+//     register_code(KC_LANG5);
+//     unregister_code(KC_LANG5);
+//     unregister_code(KC_GRAVE);
+//     unregister_code(KC_LALT);
+//   }
+// }
 
 bool OS_State_mode = false;
 
@@ -441,7 +444,7 @@ void matrix_init_user(void) {
     matrix_clear(&matrix);
     matrix_render_user(&matrix);
     matrix_update(&display, &matrix);
-  }c
+  }
 #endif//SSD1306OLED
 
 int os_state_led = 190 ;
@@ -677,8 +680,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case IM_EN:
       if (record->event.pressed) {
         // when keycode IM_EN is pressed
-        // SEND_STRING(SS_TAP(X_F23));  
-        IME_change_resist(0);
+        SEND_STRING(SS_TAP(X_LANG5));
+        SEND_STRING(SS_TAP(X_F23));  
+        // IME_change_resist(_MDVORAK);
         layer_clear();
         persistent_default_layer_set(1UL<< 0) ;   
         layer_on(0);
@@ -690,9 +694,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case IM_JP:
       if (record->event.pressed) {
         // when keycode IM_JP is pressed
-        //SEND_STRING(SS_TAP(X_LANG5));
-        IME_change_resist(2);
-        // SEND_STRING(SS_TAP(X_F24)); 
+        SEND_STRING(SS_TAP(X_LANG5));
+        SEND_STRING(SS_TAP(X_F24));
+        // IME_change_resist(_MSKYTOUCH);
         layer_clear();
         persistent_default_layer_set(1UL<< 2);  
         layer_on(2);

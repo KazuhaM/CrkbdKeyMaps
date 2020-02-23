@@ -32,16 +32,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #define USE_SERIAL_PD2
 
-//#define TAPPING_FORCE_HOLD
+#define TAPPING_FORCE_HOLD
+#define TAPPING_TERM 150
 
 #undef RGBLED_NUM
+#define RGBLIGHT_ANIMATIONS
 #define RGBLED_NUM 27
 #define RGBLIGHT_LIMIT_VAL 120
 #define RGBLIGHT_HUE_STEP 10
 #define RGBLIGHT_SAT_STEP 17
 #define RGBLIGHT_VAL_STEP 17
-
-#define PERMISSIVE_HOLD
-#define TAPPING_TERM 180
-#define TAPPING_TOGGLE 2
-#include "../../config.h"
